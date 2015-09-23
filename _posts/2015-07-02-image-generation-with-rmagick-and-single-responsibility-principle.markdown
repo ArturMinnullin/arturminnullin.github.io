@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title:  "Image generation with RMagick and Single Responsibility Principle"
 date:   2015-07-02 00:00:00
 ---
