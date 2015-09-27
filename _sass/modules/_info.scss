@@ -1,0 +1,33 @@
+.main-info {
+  margin-bottom: 30px;
+
+  img {
+    width: 150px;
+    border-radius: 150px;
+  }
+}
+
+.socials {
+  float: right;
+}
+
+.icon {
+  > svg {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+
+    path {
+      fill: $grey-color;
+    }
+  }
+}
+
+.social-media-list {
+  margin-top: 10px;
+
+  li {
+    list-style: none;
+  }
+}

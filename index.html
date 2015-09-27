@@ -1,19 +1,18 @@
 ---
 layout: default
 ---
-<div class="home">
-  <h1 class="page-heading">
-    Привет, я Артур.
-  </h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
+<div class="main-info">
+  <img src="/assets/my_photo.jpg">
+  <div class="socials">
+    <h1>Artur Minnullin</h1>
+    {% include socials.html %}
+  </div>
 </div>
+<ul class="post-list">
+  {% for post in site.posts %}
+    <li>
+      <!-- <span class="post-meta">{{ post.date | date: "%d %B %Y" }}</span> -->
+      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

@@ -1,20 +1,26 @@
 body {
-
+  font: normal normal 20px/1.5 $font-family;
 }
 
 a {
+  text-decoration: none;
+  color: $text-color;
 
+  &:hover {
+    color: $text-color-hover;
+  }
 }
 
 h1 {
-
+  font-size: 2em;
+  font-weight: normal;
+  letter-spacing: .1em;
 }
 
 h2 {
 
-
 }
 
 p {
-
+  margin-top: 10px;
 }

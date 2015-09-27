@@ -1,3 +1,4 @@
-@include "vars";
-@include "fonts";
-@include "base";
+@import "reset";
+@import "vars";
+@import "fonts";
+@import "base";
