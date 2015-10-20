@@ -1,0 +1,18 @@
+.post-header {
+  padding-bottom: 1.75em;
+}
+
+.post-content {
+  margin-bottom: 3em;
+
+  ol, ul {
+    padding: 1.2em 1.3em;
+  }
+}
+
+:not(pre) > code {
+  line-height: .9em;
+  background-color: $code-background;
+  border: 1px solid $code-border-color;
+  padding: 0.3em;
+}

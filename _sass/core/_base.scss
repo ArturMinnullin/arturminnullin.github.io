@@ -17,10 +17,18 @@ h1 {
   letter-spacing: .1em;
 }
 
-h2 {
-
+p {
+  margin-top: 1.2em;
 }
 
-p {
-  margin-top: 10px;
+pre {
+  line-height: .9em;
+  background-color: $code-background;
+  border: 1px solid $code-border-color;
+  padding: 0.8em;
+  margin: 0.7em 0;
+}
+
+code {
+  font-size: 14px;
 }
