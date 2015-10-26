@@ -1,5 +1,13 @@
 .post-header {
   padding-bottom: 1.75em;
+
+  h2 {
+    line-height: 1.2em;
+  }
+
+  span {
+    color: $grey-color;
+  }
 }
 
 .post-content {
@@ -7,6 +15,10 @@
 
   ol, ul {
     padding: 1.2em 1.3em;
+  }
+
+  a {
+    text-decoration: underline;
   }
 }
 

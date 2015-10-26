@@ -4,9 +4,18 @@
   img {
     width: 150px;
     border-radius: 150px;
+
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 }
 
 .socials {
   float: right;
+
+  @media (max-width: 600px) {
+    float: none;
+    text-align: center;
+  }
 }
