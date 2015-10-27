@@ -35,6 +35,7 @@ end
 ```
 
 To create first admin_user:
+
 ```ruby
 rake db:migrate
 rake db:seed
