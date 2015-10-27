@@ -159,7 +159,9 @@ WatermarkedBackground.new(
 ).write("/path/to/generated_image.jpg")
 ```
 
-Check out the result of my work [here.](https://gist.github.com/ArturMinnullin/15ac6b602282089476c9) Nevertheless, RMagick has a bunch of cool features. They can be found at their [official web-site](https://rmagick.github.io/).
+Check out the result of my work below.
+![Result]({{ site.url }}/assets/generated_image.png)
+Nevertheless, RMagick has a bunch of cool features. They can be found at their [official web-site](https://rmagick.github.io/).
 
 
 P.S. Special thanks go to [Vladimir Mikhailov](https://github.com/VladimirMikhailov) for taking the time to review this post and give terrific advice that lead to the great improvement.
