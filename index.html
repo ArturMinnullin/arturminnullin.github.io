@@ -6,6 +6,15 @@ title: Artur Minnullin | It's my name
   <img src="/assets/my_photo.jpg">
   <div class="socials">
     <h1>Artur Minnullin</h1>
+    <div class="socials-links">
+      {% for social in site.social %}
+        {% if social.url %}
+          <a class="icon-{{ social.icon }}" href="{{ social.url }}">
+            <i class="fa fa-{{ social.icon }}"></i>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 <ul class="post-list">

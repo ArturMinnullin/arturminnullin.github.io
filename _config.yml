@@ -3,3 +3,16 @@ description: >
   Artur Minnullin's personal site. Ruby on Rails, Javascript development.
 
 markdown: redcarpet
+
+social:
+  - icon: github
+    url:  https://github.com/ArturMinnullin
+
+  - icon: linkedin
+    url:  https://www.linkedin.com/in/arturminnullin
+
+  - icon: vk
+    url:  http://vk.com/artur_min
+
+  - icon: at
+    url:  mailto:minnullin.artur@gmail.com

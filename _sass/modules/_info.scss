@@ -19,3 +19,23 @@
     text-align: center;
   }
 }
+
+.socials-links {
+  text-align: center;
+
+  a {
+    padding: 0.4em 0.7em;
+  }
+}
+
+.icon-github:hover, .icon-at:hover {
+  color: #000;
+}
+
+.icon-linkedin:hover {
+  color: #1B85BC;
+}
+
+.icon-vk:hover {
+  color: #54769A;
+}
