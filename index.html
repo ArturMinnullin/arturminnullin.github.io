@@ -11,8 +11,8 @@ title: Artur Minnullin | It's my name
 <ul class="post-list">
   {% for post in site.posts %}
     <li>
-      <!-- <span class="post-meta">{{ post.date | date: "%d %B %Y" }}</span> -->
       <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      <sup class="post-date">{{ post.date | date: "%d %B" }}</sup>
     </li>
   {% endfor %}
 </ul>
