@@ -32,3 +32,8 @@
   border: 1px solid $code-border-color;
   padding: 0.3em;
 }
+
+pre {
+  overflow-x: scroll;
+  display: block;
+}
