@@ -1,3 +1,7 @@
+.post {
+  margin-bottom: 3em;
+}
+
 .post-header {
   h2 {
     line-height: 1.2em;
@@ -9,7 +13,9 @@
 }
 
 .post-content {
-  margin-bottom: 3em;
+  border-bottom: 1px dashed $code-border-color;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
   line-height: 1.6em;
 
   ol, ul {
@@ -24,6 +30,10 @@
   h2 {
     margin: 1em 0;
   }
+}
+
+.back-link {
+
 }
 
 :not(pre) > code {
