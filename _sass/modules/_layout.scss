@@ -7,7 +7,20 @@
 }
 
 .wrapper {
-  max-width: 700px;
+  max-width: 650px;
   width: auto;
   margin: 0 auto;
+}
+
+.post-list {
+  margin-left: 25px;
+  line-height: 1.6em;
+}
+
+.post-date {
+  font-size: x-small;
+  background-color: $green-color;
+  color: white;
+  padding: 0 0.5em;
+  border-radius: 1em;
 }
