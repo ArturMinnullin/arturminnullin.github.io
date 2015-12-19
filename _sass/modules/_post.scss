@@ -8,6 +8,7 @@
   }
 
   span {
+    font-size: 0.8em;
     color: $grey-color;
   }
 }
@@ -32,10 +33,6 @@
   }
 }
 
-.back-link {
-
-}
-
 :not(pre) > code {
   line-height: .9em;
   background-color: $code-background;
@@ -44,6 +41,6 @@
 }
 
 pre {
-  overflow-x: auto;
   display: block;
+  overflow-x: auto;
 }
