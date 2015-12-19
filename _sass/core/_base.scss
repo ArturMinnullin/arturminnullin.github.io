@@ -6,6 +6,7 @@ a {
   text-decoration: none;
   border-bottom: 1px solid $text-color;
   color: $text-color;
+  transition: color 0.4s;
 
   &:hover {
     color: $text-color-hover;
