@@ -12,6 +12,13 @@
   margin: 0 auto;
 }
 
+.main-text {
+  border-bottom: 1px dashed $code-border-color;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  line-height: 1.6em;
+}
+
 .post-list {
   margin-left: 25px;
   line-height: 1.6em;
