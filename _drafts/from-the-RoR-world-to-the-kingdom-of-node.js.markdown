@@ -1,18 +1,19 @@
 ---
 layout: post
-title: From the RoR world to the kingdom of node.js. Part 1.
+title: From the RoR world to the kingdom of express.js. Part 1.
 ---
-Building API-applications with Ruby on Rails is everyday work for me (bad start). Usual instruments that I am using are:
+I’ve been writing API-applications with Ruby on Rails for years and it satisfies me a lot.  Usual instruments that provides the desired usability are:
 
 1. [Rails::API](https://github.com/rails-api/rails-api) is a bit more lightweight and faster Rails
 2. PostgreSQL as a relational database
 3. [Active Model Serializers](https://github.com/rails-api/active_model_serializers) for configuration the response's appearance.
 
-It fits great for my current purposes. However, in this article i will show how to get rid of rails and obtain rails-like `node.js` API instead. Probably you have a question: why? Because of several reasons.
+This scope is a good fit for me. However, in these few-post series, I’ll look at the basics of obtaining rails-like `node.js` API instead. Probably you have a question: why? Because of several reasons.
 
-Firstly, we’ve seen a greater rise of microservices' popularity. Separating the large monolithic applications into microservices allows us to use not only rails applications.
-Moreover, in some cases we have to avoid the such heavyweight framework as rails. Also it is always beneficial to learn something new.
-So I decided to make a try and "translate" the familiar stack of technologies using JavaScript. I want to stress that I don't have a lot of experience with `node.js` so this article should not be considered as perfect example.
+Firstly, last year I’ve seen a greater rise of microservices popularity. Separating the large monolithic applications into microservices allows us to use not only rails applications.
+Moreover, in some cases it would be better to avoid the such heavyweight framework as rails.
+Plus, when you write a Node.js application, you're writing and learning Javascript. And the lifelong practice of learning is what makes us humans and our lives worthwhile.
+So I decided to make a try and "translate" the familiar stack of technologies with Javascript. I want to stress that I don't have a lot of experience with `node.js` so this article should not be considered as a perfect example.
 
 In this part I describe how to setup project that based on features of [express.js](http://expressjs.com/). As a first step I am going to create the simple CRUD logic for models that I gave the name `article`.
 
@@ -24,7 +25,7 @@ Let's start by installing `express-generator` (it installs `express` at the same
 npm install -g express-generator
 ```
 
-Now we can create new application and then install dependencies:
+Once we’ve done, we can generate new application and then install dependencies:
 
 ```bash
 express example-express-api
@@ -32,7 +33,7 @@ cd example-express-api
 npm install
 ```
 
-It can be already fired by typing `npm start`, but for the better developing experience we have to install some tool for the monitoring code changes. Without it the server has to be restarted manuallyeach time when the code was changed. There is [nodemon](https://github.com/remy/nodemon) that will restart automatically your node application.
+The server can be already fired by typing `npm start`, but for the better developing experience we really need to install some tool for the monitoring code changes. Without it the server has to be restarted manuallyeach time when the code was changed. There is [nodemon](https://github.com/remy/nodemon) that will restart automatically your node application.
 
 ```bash
 npm install -g nodemon
@@ -50,20 +51,21 @@ Type `npm start` again and navigate to `http://localhost:3000/` in your browser.
 
 ## 2. Using ES2015
 
-Before we move on to the database details, let’s add ability to support the next generation standard of JS - ES2015. It runs by transpiling new syntax that ES2105 brings into the browser supported. To put in into action we need to install babel and preset for it.
+Before we move on to the database details, let’s add ability to support the modern standard of JS &mdash; ES2015. It runs by transpiling new syntax that ES2015 brings into the browser supported one. To put it into the action let's install babel and preset for it.
 
 ```bash
 npm install --save-dev babel-cli babel-preset-es2015
 ```
 
-The update the `start` script in the `package.json` file:
+Then update the `start` script in the `package.json` file:
 
 ```javascript
 "scripts": {
   "start": "nodemon ./bin/www --exec babel-node --presets es2015"
 }
 ```
-Because we have installed `babel-cli` earlier we have access to the babel-node executable, which will transform all code before running it through nodemon.
+
+Because we have enabled `babel-cli` earlier we have access to the babel-node executable, which will transform all code before running it through nodemon.
 Optionally, for the finishing touch we could update generated by the `express` files. Basically, we need three things to do:
 
 * substitute the things like
@@ -113,13 +115,13 @@ Here I set up a simple structure of the articles table. The particular article c
 
 ## 4. First couple of endpoints
 
-Add new file `articles.js` inside routes directory, import this routes inside `app.js` and specify base route:
+Let's keep it simple by adding new route file `articles.js` inside `routes` directory. Two things to write inside `app.js`: new routes and specify base route. This is what the `app.js` should now contain:
+
 ```javascript
 import articles from './routes/articles';
 app.use('/articles', articles);
 ```
-
-View all articles:
+Now, let’s build first couple of endpoints: index and create. To make a request to database the connection pool should be initialized. It takes one argument presented url to database.
 
 ```javascript
 import express from 'express';
@@ -151,8 +153,7 @@ router.get('/', (req, res, next) => {
 module.exports = router;
 ```
 
-Important words about x-www-form-urlencoded and POSTman extension.
-Create new article:
+For testing POST action I am using the POSTman extension for google chrome. We should send response via `x-www-form-urlencoded` format. Data are available through `res.body` attribute.
 
 ```javascript
 router.post('/', (req, res, next) => {
@@ -170,4 +171,6 @@ router.post('/', (req, res, next) => {
 });
 ```
 
-## Conclusion
+## In-between conclusion
+
+It seems to take much more time to string everything together in `express.js`. I guess the main reason relates to the lack of opionated structure. In next part I'm going to build remained endpoints to obtain the full CRUD interface and also polish routes by introducing controllers.

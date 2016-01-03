@@ -38,6 +38,8 @@
   background-color: $code-background;
   border: 1px solid $code-border-color;
   padding: 0.3em;
+  position: relative;
+  bottom: 0.1em;
 }
 
 pre {
