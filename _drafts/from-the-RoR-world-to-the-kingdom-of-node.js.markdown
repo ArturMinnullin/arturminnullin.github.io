@@ -2,30 +2,32 @@
 layout: post
 title: From the RoR world to the kingdom of express.js. Part 1.
 ---
-I’ve been writing API-applications with Ruby on Rails for years and it satisfies me a lot.  Usual instruments that provides the desired usability are:
+I have been writing API-applications with Ruby on Rails for years and i am pretty satisfied with it. Usual instruments that provide the desired usability are:
 
 1. [Rails::API](https://github.com/rails-api/rails-api) is a bit more lightweight and faster Rails
 2. PostgreSQL as a relational database
-3. [Active Model Serializers](https://github.com/rails-api/active_model_serializers) for configuration the response's appearance.
+3. [Active Model Serializers](https://github.com/rails-api/active_model_serializers) for configuration the response's appearance
 
-This scope is a good fit for me. However, in these few-post series, I’ll look at the basics of obtaining rails-like `node.js` API instead. Probably you have a question: why? Because of several reasons.
+This scope is a good fit for me. However, in these few-post series, I’ll look at the basics of the obtaining rails-like `node.js` API instead. There are several reasons for that.
 
-Firstly, last year I’ve seen a greater rise of microservices popularity. Separating the large monolithic applications into microservices allows us to use not only rails applications.
-Moreover, in some cases it would be better to avoid the such heavyweight framework as rails.
-Plus, when you write a Node.js application, you're writing and learning Javascript. And the lifelong practice of learning is what makes us humans and our lives worthwhile.
-So I decided to make a try and "translate" the familiar stack of technologies with Javascript. I want to stress that I don't have a lot of experience with `node.js` so this article should not be considered as a perfect example.
+Firstly, last year we saw a huge rise of microservices popularity. Separating the large monolithic applications into microservices allows us to replace rails applications with something else.
 
-In this part I describe how to setup project that based on features of [express.js](http://expressjs.com/). As a first step I am going to create the simple CRUD logic for models that I gave the name `article`.
+Moreover, in some cases it would be better to avoid such heavyweight framework as rails.
+Plus, when you write a `node.js` application, you're writing and learning Javascript. And the lifelong practice of learning is what makes us humans and our lives worthwhile.
+
+So I have decided to make a try and to "translate" the familiar stack of technologies into Javascript.
+
+In this part I am going to describe how to setup project that is based on the features of [express.js](http://expressjs.com/). As the first step I am going to create a simple CRUD logic for models that I gave the name `article`.
 
 ## 1. Create new express application
 
-Let's start by installing `express-generator` (it installs `express` at the same time):
+Let's get it going by fetching `express-generator` (it installs `express` as an ensemble):
 
 ```bash
 npm install -g express-generator
 ```
 
-Once we’ve done, we can generate new application and then install dependencies:
+Once we're done, we can generate new application and set dependencies up:
 
 ```bash
 express example-express-api
@@ -33,13 +35,13 @@ cd example-express-api
 npm install
 ```
 
-The server can be already fired by typing `npm start`, but for the better developing experience we really need to install some tool for the monitoring code changes. Without it the server has to be restarted manuallyeach time when the code was changed. There is [nodemon](https://github.com/remy/nodemon) that will restart automatically your node application.
+The server could be already fired by typing `npm start`, but for the better developing experience we need to install some tool for the monitoring code changes. Without it the server has to be restarted manually each time when the code is modificated. There is [nodemon](https://github.com/remy/nodemon) that will restart the node application automatically.
 
 ```bash
 npm install -g nodemon
 ```
 
-And then switch lines in `package.json` to:
+And then switch the lines in `package.json` to:
 
 ```javascript
 "scripts": {
@@ -47,11 +49,11 @@ And then switch lines in `package.json` to:
 }
 ```
 
-Type `npm start` again and navigate to `http://localhost:3000/` in your browser. You should see the "Welcome to Express" text. Voila, we are ready to begin the actual development.
+Type `npm start` again and navigate to `http://localhost:3000/` in the browser. We should see the "Welcome to Express" text. Voila, preparatory work is complete and we are ready to begin the actual development.
 
 ## 2. Using ES2015
 
-Before we move on to the database details, let’s add ability to support the modern standard of JS &mdash; ES2015. It runs by transpiling new syntax that ES2015 brings into the browser supported one. To put it into the action let's install babel and preset for it.
+Before we move on to the database details, let’s add an ability to support the modern standard of Javascript &mdash; ES2015. It runs by transpiling new syntax that ES2015 brings into the one supported by the browser. To put it into the action let's install babel and preset for it.
 
 ```bash
 npm install --save-dev babel-cli babel-preset-es2015
@@ -65,8 +67,8 @@ Then update the `start` script in the `package.json` file:
 }
 ```
 
-Because we have enabled `babel-cli` earlier we have access to the babel-node executable, which will transform all code before running it through nodemon.
-Optionally, for the finishing touch we could update generated by the `express` files. Basically, we need three things to do:
+Because `babel-cli` has been applied earlier, we have access to the babel-node executable, which transforms all of the code before running it through nodemon.
+Optionally, for the finishing touch we could update generated by the `express` files. Basically, we need to accomplish the following three things:
 
 * substitute the things like
 `var routes = require('./routes/index')` to  `import routes from './routes/index'`
@@ -76,21 +78,21 @@ Optionally, for the finishing touch we could update generated by the `express` f
 
 ## 3. Connect PostgreSQL to application
 
-Rails has a really awesome migration system. It allows to evolve database schema over time. I want to use this mechanism in my js-app too. For these purposes I decided to use [pg-migrate](https://github.com/theoephraim/node-pg-migrate).
+Rails has a really awesome migration system. It allows us to evolve database schema overtime. I want to achieve this mechanism in my js-app too. As with many things in JS, there is a package that helps us to do this called [pg-migrate](https://github.com/theoephraim/node-pg-migrate).
 
 ```bash
 npm install -g node-pg-migrate --save
 ```
 
-Then:
+And:
 
 ```bash
 pg-migrate create create_articles
 ```
 
-It generates new migration inside `migrations` folder. Fill it with the following code:
+It generates new migration inside `migrations` folder. Fill it out with the following code:
 
-```javascript
+```javaScript
 exports.up = (pgm) => {
   pgm.createTable('articles', {
     id: { type: 'serial', primaryKey: true },
@@ -111,19 +113,19 @@ According to the documentaion for the successful migration we have to add `.env`
 DATABASE_URL=postgresql://localhost:5432/my_blog
 ```
 
-Here I set up a simple structure of the articles table. The particular article consists two text fields (title and body) and one timestamp (created_at). It is time to create database with name `my_blog` in `psql` console and run migration command by entering `pg-migrate up`.
+Here I set up a simple structure of the articles table. The particular article consists of two text fields (title and body) and one timestamp. It is time to create database with name `my_blog` in `psql` console and run the migration command by entering `pg-migrate up`.
 
 ## 4. First couple of endpoints
 
-Let's keep it simple by adding new route file `articles.js` inside `routes` directory. Two things to write inside `app.js`: new routes and specify base route. This is what the `app.js` should now contain:
+Let's keep it simple by adding new route file `articles.js` inside `routes` directory. Two things to note inside `app.js`: new routes and specify base route. This is what the `app.js` should contain:
 
-```javascript
+```javaScript
 import articles from './routes/articles';
 app.use('/articles', articles);
 ```
-Now, let’s build first couple of endpoints: index and create. To make a request to database the connection pool should be initialized. It takes one argument presented url to database.
+Now, let’s build the first couple of endpoints: index and create. To make a request to database the connection pool should be initialized. It takes one argument presented url to database.
 
-```javascript
+```javaScript
 import express from 'express';
 import pg from 'pg';
 
@@ -153,9 +155,9 @@ router.get('/', (req, res, next) => {
 module.exports = router;
 ```
 
-For testing POST action I am using the POSTman extension for google chrome. We should send response via `x-www-form-urlencoded` format. Data are available through `res.body` attribute.
+For testing POST action I am using the POSTman extension for google chrome. We should send response via `x-www-form-urlencoded` format. Data is available through `res.body` attribute.
 
-```javascript
+```javaScript
 router.post('/', (req, res, next) => {
   let data = { title: req.body.title, body: req.body.body };
 
@@ -173,4 +175,4 @@ router.post('/', (req, res, next) => {
 
 ## In-between conclusion
 
-It seems to take much more time to string everything together in `express.js`. I guess the main reason relates to the lack of opionated structure. In next part I'm going to build remained endpoints to obtain the full CRUD interface and also polish routes by introducing controllers.
+It seems to take much more time to string everything together in `express.js`. I guess the main reason is the lack of opionated structure. In next post I'm going to build remained endpoints to obtain the full CRUD interface and also polish routes by introducing controllers.
