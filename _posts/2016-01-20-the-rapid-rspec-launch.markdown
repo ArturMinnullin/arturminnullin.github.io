@@ -18,7 +18,7 @@ import sublime, sublime_plugin
 class TestRunnerCommand(sublime_plugin.TextCommand):
   def run(self, edit):
     full_path = self.view.file_name() # recieve the absolute path for file
-    path = full_path.split("spec/", 1)[1] # transorm it to relative path for the easy reading
+    path = full_path.split("spec/", 1)[1] # transform it to the relative path for the easy reading
     copied_string = "bundle exec rspec spec/" + path
     sublime.set_clipboard(copied_string) # save it to clipboard
 ```
