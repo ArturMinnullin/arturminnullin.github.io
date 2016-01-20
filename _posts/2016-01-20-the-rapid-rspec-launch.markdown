@@ -1,6 +1,7 @@
 ---
 layout: post
 title: The rapid RSpec launch with the custom sublime package
+description: Writing custom sublime package to accelerate the launch of the specific spec
 date: 2016-01-20 00:00:00
 ---
 It turns out that testing is crucial. The everyday routine of good developer consists of several actions: write the failing test, implement code for this, launch the test again, refactor code and continue the process until you are satisfied.

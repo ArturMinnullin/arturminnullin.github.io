@@ -1,6 +1,7 @@
 ---
 layout: post
 title: How we test Elasticsearch
+description: Writing tests for the elasticsearch engine in Ruby on Rails
 date: 2015-07-05 00:00:00
 ---
 One of our projects contains Elasticsearch as a fulltext search engine. It comes in handy for a few things such as an aggregating search, and a phonetic search that returns results when a user tries to find a misspelt word. Also Elasticsearch has a convenient `gem "elasticsearch-rails"`. It provides tools that solve some common problems and has a bunch of syntactic sugar. The installation process is not in the scope of this post, but you can install the gem following the instructions from the [official github repo](https://github.com/elastic/elasticsearch-rails#installation).

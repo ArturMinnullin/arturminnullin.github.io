@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Image generation with RMagick and Single Responsibility Principle
+description: Use rmagick in order to generate image with many layers
 date: 2015-07-31 00:00:00
 ---
 Recently in one of our projects I was confronted with a feature related to sharing on Facebook. Facebook has an extremely simple API for this very purposes. It requires only a single parameter - API key. However, you can customize the text and the image in the Share dialog and Post by changing these values: title, description and image url.

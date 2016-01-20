@@ -1,6 +1,7 @@
 ---
 layout: post
 title: From the RoR world to the kingdom of express.js. Part 1.
+description: Use PostgreSQL, express.js, ES2015 to write API-service
 date: 2016-01-06 00:00:00
 ---
 I have been writing API-applications with Ruby on Rails for years and i am pretty satisfied with it. Usual instruments that provide the desired usability are:

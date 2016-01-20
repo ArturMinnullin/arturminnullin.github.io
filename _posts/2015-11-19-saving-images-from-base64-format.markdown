@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Saving images from base64 format
+description: Saving images from the Ruby on Rails API in base64 format
 date: 2015-11-19 00:00:00
 ---
 
