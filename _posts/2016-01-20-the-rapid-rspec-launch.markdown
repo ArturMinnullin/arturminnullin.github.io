@@ -4,9 +4,9 @@ title: The rapid RSpec launch with the custom Sublime package
 description: Writing custom Sublime package to accelerate the launch of the specific spec
 date: 2016-01-20 00:00:00
 ---
-It turns out that testing is crucial. The everyday routine of good developer consists of several actions: write the failing test, implement code for this, launch the test again, refactor code and continue the process until you are satisfied.
+It turns out that testing is crucial. The everyday routine of a good developer consists of several actions: writing the failing test, implementing code for it, launching the test again, refactoring the code and continuing the process until you are satisfied.
 
-I use Sublime as a text editor and after creating the test I always need to switch to the console, type `rspec spec/` and use autocomplete to reach the desired file. However, it is becoming irritable especially when nesting is huge. Of course, I can use `Ruby Tests` package, but it provides ability to run test only inside the text editor. I believe that there are more convenient and efficient way.
+I use Sublime as a text editor and after creating the test I always need to switch to the console, type `rspec spec/` and use autocomplete to reach the desired file. However, it is becoming irritable especially when nesting is huge. Of course, I can use `Ruby Tests` package, but it provides an ability to run test only inside the text editor. I thought that there has got to be a more efficient way.
 
 What I need is something that will generate string for the firing specific spec. For that purpose I have written a short Sublime package. In this article, I want to share how I have implemented it.
 
@@ -31,4 +31,4 @@ And inside `Preferences -> Key Bindings - User` add:
 ]
 ```
 
-And with this, my workflow is transformed into: `cmd+shift+x` + jump to console + `cmd+v`. Thus, I got rid of the autocomplete work and free my time to make another cup of coffee. Thank you for reading!
+And with this, my workflow is transformed into: `cmd+shift+x` + jump to console + `cmd+v`. Thus, I got rid of the autocomplete work and freed up some time to make another cup of coffee. Thank you for reading!
