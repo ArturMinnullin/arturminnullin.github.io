@@ -19,9 +19,16 @@
   line-height: 1.6em;
 }
 
+.blog-title {
+  margin-bottom: 0.8em;
+}
+
 .post-list {
   margin-left: 25px;
-  line-height: 1.8em;
+
+  li {
+    margin-bottom: 0.9em;
+  }
 }
 
 .post-date {
