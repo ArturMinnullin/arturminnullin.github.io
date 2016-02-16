@@ -2,6 +2,16 @@ body {
   font: normal normal 18px/1.5 $font-family;
 }
 
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: $text-color-hover;
+}
+
 a {
   text-decoration: none;
   border-bottom: 1px solid $text-color;
