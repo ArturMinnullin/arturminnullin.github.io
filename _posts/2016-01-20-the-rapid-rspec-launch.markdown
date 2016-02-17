@@ -12,7 +12,7 @@ What I need is something that will generate string for the firing specific spec.
 
 Let's start with selecting `Tools -> New Plugin` menu entry. Save the generated skeleton with name `test_runner.py` and then fill it with the following code:
 
-```python
+~~~python
 import sublime, sublime_plugin
 
 class TestRunnerCommand(sublime_plugin.TextCommand):
@@ -21,14 +21,14 @@ class TestRunnerCommand(sublime_plugin.TextCommand):
     path = full_path.split("spec/", 1)[1] # transform it to the relative path for the easy reading
     copied_string = "bundle exec rspec spec/" + path
     sublime.set_clipboard(copied_string) # save it to clipboard
-```
+~~~
 
 And inside `Preferences -> Key Bindings - User` add:
 
-```bash
+~~~bash
 [
   { "keys": ["command+shift+x"], "command": "test_runner" }
 ]
-```
+~~~
 
 And with this, my workflow is transformed into: `cmd+shift+x` + jump to console + `cmd+v`. Thus, I got rid of the autocomplete work and freed up some time to make another cup of coffee. Thank you for reading!

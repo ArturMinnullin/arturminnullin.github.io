@@ -12,7 +12,7 @@ In this short article I want to share my experience of writing tests for Elastic
 
 First of all, I was adding `Trademark.import(force: true, refresh: true)` to all examples that are related to Elasticsearch. It solved the problem associated with cleaning state between particular tests and refreshed the index manually. I have added this line to `before` block. Now let’s take a look at some sample unit test:
 
-```ruby
+~~~ruby
 describe SearchTrademarks do
   describe "#results" do
     let!(:trademark) do
@@ -39,14 +39,14 @@ describe SearchTrademarks do
     end
   end
 end
-```
+~~~
 
 Then my setup was working great until I realized that one problem is still there. Every time I had launched the test suite, It would reindex my test database and all data from the developing database got lost. When I returned to the development I had to reindex my development database again. It can become a bit tedious after a while.
 
 
 To solve this I decided to use `gem "elasticsearch-extensions"`. It allowed me to programmatically start and stop an Elasticsearch cluster suitable for isolating tests. In order to avoid conflicts with development Elasticsearch cluster I used another port (by default it is 9200). It can be easily implemented by changing my `rails_helper.rb` to:
 
-```ruby
+~~~ruby
 # After other requires
 require "rake"
 require "elasticsearch/extensions/test/cluster/tasks"
@@ -67,17 +67,17 @@ end
 def use_test_cluster?
   !Elasticsearch::Extensions::Test::Cluster.running?(on: 9250)
 end
-```
+~~~
 
 I enjoyed the process of getting this problem resolved and pushing the code to [semaphoreci](https://semaphoreci.com/) (we use this service as a continuous integration tool). But suddenly the tests started failing! It was because semaphore knew nothing about the strange hostname called "localhost". To be honest, in CI we do not need the test cluster for Elasticsearch at all. The question is, how can we launch a test suite on semaphore without the test cluster and use it for the local environment at the same time?
 
 
 My implementation is laughably simple. I have created an environment variable named "CI". If it exists I do not run the test cluster. Thus, we should reinforce conditional from `use_test_cluster?` by adding an extra clause:
 
-```ruby
+~~~ruby
 def use_test_cluster?
   !ENV["CI"] && !Elasticsearch::Extensions::Test::Cluster.running?(on: 9250)
 end
-```
+~~~
 
 That's it! Hope this will help you to figure out how to test Elasticsearch in your Ruby project.

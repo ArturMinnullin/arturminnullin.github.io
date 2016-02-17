@@ -18,13 +18,13 @@ To achieve the goal I decided to use `gem "rmagick"`. RMagick is an interface be
 
 So, let me get straight to the point. First of all, I have added `gem "rmagick"` to my Gemfile. Then, told Rails to install the new gem:
 
-```ruby
+~~~ruby
 bundle install
-```
+~~~
 
 Let's analyze what we're going to do before jumping into the code. Basically, we have two options for drawing something on the image: place some text on canvas and impose images surfaces. At first sight, the best solution is to construct a service that contains two actions for each mode of drawing. My new class is being instantiated in the following way:
 
-```ruby
+~~~ruby
 class WatermarkedBackground
   BACKGROUND_PATH = "/path/to/background.jpg"
 
@@ -68,7 +68,7 @@ class WatermarkedBackground
     @background ||= Magick::Image.read(BACKGROUND_PATH).first
   end
 end
-```
+~~~
 
 Let's take a look at what we've done here.
 
@@ -95,7 +95,7 @@ After I have dotted the i's and crossed the t's it's time to ask: Is this the be
 
 So it makes sense to separate the configurations for the annotation text in the independent class that is wrapped the RMagick standard action `annotate`, as shown bellow:
 
-```ruby
+~~~ruby
 class TextImage
   attr_reader :text
   private :text
@@ -120,11 +120,11 @@ class TextImage
     end
   end
 end
-```
+~~~
 
 And class can be rewritten in the following way.
 
-```ruby
+~~~ruby
 class WatermarkedBackground
   BACKGROUND_PATH = "/path/to/background.jpg"
 
@@ -149,16 +149,16 @@ class WatermarkedBackground
      background.composite(logo, 420, 20, Magick::OverCompositeOp)
   end
 end
-```
+~~~
 
 As you see I decoupled my code and reduce dependencies. This polishing allows me to remove the responsibility for some of RMagick methods. No need to stub them for the testing `WatermarkedBackground` anymore. It is substituted by only one responsibility `TextImage` which can be easily reused without duplication.
 
-```ruby
+~~~ruby
 WatermarkedBackground.new(
   text: TextImage.new("The quick brown fox jumps over a lazy dog"),
   logo_path: "/path/to/logo.png"
 ).write("/path/to/generated_image.jpg")
-```
+~~~
 
 Check out the result of my work below.
 ![Result]({{ site.url }}/assets/generated_image.png)

@@ -16,40 +16,40 @@ Unfortunately, we are not gonna be able to simply add the `gem "activeadmin"` to
 
 Firstly, update your Gemfile by adding two gems:
 
-```ruby
+~~~ruby
 gem "activeadmin", github: "activeadmin"
 gem "sass-rails"
-```
+~~~
 
 Then install gems and initialize active_admin:
 
-```ruby
+~~~ruby
 rails g active_admin:install
-```
+~~~
 
 Now let's rename `application_controller.rb` to `base_api_controller.rb`. Now it's basis for api-controllers. `ApplicationController` shoud be used for ActiveAdmin main controller and, consequently, must be inherited from `ActionController::Base` instead of `ActionController::API`:
 
-```ruby
+~~~ruby
 class ApplicationController < ActionController::Base
 end
-```
+~~~
 
 To create first admin_user:
 
-```ruby
+~~~ruby
 rake db:migrate
 rake db:seed
-```
+~~~
 
 We need to use a number of other middlewares that are not built in `rails-api` by default. For that purposes add these lines to `application.rb`:
 
-```ruby
+~~~ruby
 # to support the flash mechanism in ActionController.
 config.middleware.use ActionDispatch::Flash
 # add encrypted cookies. It requires for the authentication with devise.
 config.middleware.use ActionDispatch::Cookies
 config.middleware.use ActionDispatch::Session::CookieStore
-```
+~~~
 
 Voila! It's ready to roll. From this point be free to use activeadmin [documentation](https://github.com/activeadmin/activeadmin/tree/master/docs#activeadmin-documentation) for the interface customization.
 

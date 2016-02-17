@@ -2,8 +2,6 @@ email: minnullin.artur@gmail.com
 description: >
   Artur Minnullin's personal website. Ruby on Rails, Javascript development.
 
-markdown: redcarpet
-
 social:
   - icon: github
     url:  https://github.com/ArturMinnullin
@@ -16,3 +14,7 @@ social:
 
   - icon: at
     url:  mailto:minnullin.artur@gmail.com
+
+kramdown:
+  input: GFM
+  coderay_line_numbers: nil
