@@ -1,8 +1,8 @@
 .page-content {
-  margin: 60px 20px;
+  margin: 60px 20px 100px 20px;
 
   @media (max-width: $screen-s) {
-    margin: 20px 10px;
+    margin: 20px 10px 80px 10px;
   }
 }
 
@@ -14,21 +14,33 @@
 
 .main-text {
   border-bottom: 1px dashed $code-border-color;
-  padding-bottom: 1em;
-  margin-bottom: 1em;
+  padding-bottom: 1.5em;
+  margin-bottom: 1.5em;
   line-height: 1.6em;
 }
 
 .blog-title {
+  text-align: center;
   margin-bottom: 0.8em;
 }
 
 .post-list {
-  margin-left: 25px;
+  text-align: center;
+  list-style: none;
 
   li {
-    margin-bottom: 0.9em;
+    margin-bottom: 1.5em;
   }
+
+  li:hover sup {
+    margin-left: 5px;
+    transition: margin-left 0.4s;
+  }
+}
+
+.post-icon {
+  color: $text-color;
+  padding-right: .3em;
 }
 
 .post-date {
