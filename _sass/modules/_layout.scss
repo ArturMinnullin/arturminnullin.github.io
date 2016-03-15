@@ -30,11 +30,16 @@
 
   li {
     margin-bottom: 1.5em;
-  }
 
-  li:hover sup {
-    margin-left: 5px;
-    transition: margin-left 0.4s;
+    sup {
+      margin-left: 0;
+      transition: margin-left 0.4s;
+    }
+
+    &:hover sup {
+      margin-left: 5px;
+      transition: margin-left 0.4s;
+    }
   }
 }
 
