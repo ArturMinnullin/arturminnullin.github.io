@@ -25,7 +25,6 @@
 }
 
 .post-list {
-  text-align: center;
   list-style: none;
 
   li {
@@ -41,12 +40,6 @@
       transition: margin-left 0.4s;
     }
   }
-}
-
-.post-icon {
-  color: $text-color;
-  padding-right: .3em;
-  font-size: .8em;
 }
 
 .post-date {
