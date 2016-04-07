@@ -215,7 +215,7 @@ class PostPolicy
   end
 
   def update?
-    user.admin? or not post.published?
+    user.admin? || !post.published?
   end
 end
 ~~~
@@ -255,7 +255,7 @@ end
 
 And again, I couldn't mention the brilliant [blog post](https://robots.thoughtbot.com/rails-refactoring-example-introduce-null-object).
 
-##Conclusion
+## Conclusion
 
 As you see there are many techniques to refactor Rails app. Isn't this over-engineering? The answer to such a question is always context-dependent, but I rarely find that it is. Don't forget that code separation makes testing easier. If you stub many things in your tests it can be indicator that you have to implement one of aforementioned layers.
 
