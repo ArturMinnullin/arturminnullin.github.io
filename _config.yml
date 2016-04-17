@@ -18,3 +18,6 @@ social:
 kramdown:
   input: GFM
   coderay_line_numbers: nil
+
+gems:
+  - jemoji
