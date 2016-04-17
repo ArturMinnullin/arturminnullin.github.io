@@ -259,4 +259,4 @@ And again, I couldn't mention a brilliant [blog post](https://robots.thoughtbot.
 
 As you see there are many techniques to refactor a Rails app. Isn't this over-engineering? The answer to such a question is always context-dependent, but I rarely find that it is. Don't forget that code separation makes testing easier. If you stub many things in your tests it can be the indicator that you have to implement one of the aforementioned layers.
 
-So, how many of them do you use? :)
+So, how many of them do you use? :smirk:

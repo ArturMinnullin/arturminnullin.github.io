@@ -161,7 +161,7 @@ WatermarkedBackground.new(
 ~~~
 
 Check out the result of my work below.
-![Result]({{ site.url }}/assets/generated_image.png)
+![Result]({{ site.url }}/assets/generated_image.png){: .post-picture }
 Nevertheless, RMagick has a bunch of cool features. They can be found at their [official web-site](https://rmagick.github.io/).
 
 
