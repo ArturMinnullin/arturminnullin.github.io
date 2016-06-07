@@ -12,11 +12,20 @@
   margin: 0 auto;
 }
 
+.main {
+  margin-bottom: 1.5em;
+}
+
 .main-text {
   border-bottom: 1px dashed $code-border-color;
   padding-bottom: 1.5em;
-  margin-bottom: 1.5em;
   line-height: 1.6em;
+}
+
+.main-language {
+  text-align: right;
+  font-style: italic;
+  font-size: .9rem;
 }
 
 .blog-title {
