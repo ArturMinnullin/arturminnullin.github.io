@@ -25,12 +25,12 @@ title: Artur Minnullin | That's my name
     <p>The chicken above symbolizes my continuous process of searching something new.</p>
   </div>
   <div class="main-language">
-    <a href="#">На великом и могучем</a>
+    <a href="/ru">На великом и могучем</a>
   </div>
 </div>
 <h3 class="blog-title">Monotonous blog</h3>
 <ul class="post-list">
-  {% for post in site.posts %}
+  {% for post in site.posts_by_language[page.language] %}
     <li>
       <i class="fa fa-dot-circle-o post-icon"></i>
       <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
