@@ -26,14 +26,14 @@ title: main.title
   </div>
   <div class="main-language">
     {% if site.lang == "en" %}
-      <a href="/ru">На великом и могучем</a>
+      <a href="/ru">{% t main.lang %}</a>
     {% else %}
-      <a href="/">To the language of Shakespeare</a>
+      <a href="/">{% t main.lang %}</a>
     {% endif %}
   </div>
 </div>
 {% if site.lang == "en" %}
-  <h3 class="blog-title">Monotonous blog</h3>
+  <h3 class="blog-title">{% t main.blog_title %}</h3>
   <ul class="post-list">
     {% for post in site.posts %}
       <li>
