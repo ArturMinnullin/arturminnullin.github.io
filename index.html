@@ -1,48 +1,8 @@
 ---
 layout: default
-title: main.title
+language: en
+permalink: "/"
+subset: main
+title: Artur Minnullin | That's my name
 ---
-<div class="main-info">
-  <img src="/assets/my_photo.jpg" class="avatar">
-  <div class="socials">
-    <img src="/assets/chicken.gif" class="chicken">
-    <h1>{% t main.name %}</h1>
-    <div class="socials-links">
-      {% for social in site.social %}
-        {% if social.url %}
-          <a class="icon-{{ social.icon }}" href="{{ social.url }}">
-            <i class="fa fa-{{ social.icon }}"></i>
-          </a>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-</div>
-<div class="main">
-  <div class="main-text">
-    <p>{% t main.description_first_part %}</p>
-    <p>{% t main.description_second_part %}</p>
-    <p>{% t main.description_third_part %}</p>
-  </div>
-  <div class="main-language">
-    {% if site.lang == "en" %}
-      <a href="/ru">{% t main.lang %}</a>
-    {% else %}
-      <a href="/">{% t main.lang %}</a>
-    {% endif %}
-  </div>
-</div>
-{% if site.lang == "en" %}
-  <h3 class="blog-title">{% t main.blog_title %}</h3>
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <i class="fa fa-dot-circle-o post-icon"></i>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
-          {{ post.title }}
-        </a>
-        <sup class="post-date">{{ post.date | date: "%d %b %Y" }}</sup>
-      </li>
-    {% endfor %}
-  </ul>
-{% endif %}
+{% include home.html %}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+      <meta name="description" content="Return records from DB in a particular order using ActiveRecord">
+    
+    <title>
+      Return records from DB in a particular order
+    </title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="/css/application.css">
+    <link rel="stylesheet" href="/css/mobile.css" media="screen and (max-width: 600px)">
+  </head>
+  <body>
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+  <header class="post-header">
+    <span>August 15, 2016</span>
+    <h2>Return records from DB in a particular order</h2>
+  </header>
+
+  <article class="post-content">
+    <p>Let’s imagine that somehow we have an array of ids in a specific order. We can obtain them from the from on the view or as results of complicated SQL. And now we want to get records in the order that array dictates. The usual manner doesn’t fit…</p>
+
+<div class="highlighter-rouge">
+<pre class="highlight"><code><span class="no">Product</span><span class="p">.</span><span class="nf">find</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<p>…because it generates the simpest SQL that uses index search…</p>
+
+<div class="highlighter-rouge">
+<pre class="highlight"><code>Product.find<span class="o">([</span>1, 25, 12]<span class="o">)</span>.to_query
+Product Load <span class="o">(</span>0.5ms<span class="o">)</span>  SELECT <span class="s2">"products"</span>.<span class="k">*</span> FROM <span class="s2">"products"</span> WHERE <span class="s2">"products"</span>.<span class="s2">"id"</span> IN <span class="o">(</span>1, 25, 12<span class="o">)</span>
+</code></pre>
+</div>
+
+<p>… and return records in order that is typical for index (BTree in this example). Therefore, the pure ActiveRecord is not sufficient here. We need to fix this by taking advantage of SQL magic <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://assets.github.com/images/icons/emoji/unicode/2728.png" height="20" width="20" align="absmiddle"></p>
+
+<p>So one way how to deal with this is to define the method that “rank” products, use the resulting structure for inner join and order them by rank. Let me demonstrate what I mean:</p>
+
+<div class="highlighter-rouge">
+<pre class="highlight"><code><span class="k">def</span> <span class="nf">ranked_products</span>
+  <span class="n">products</span><span class="p">.</span><span class="nf">map</span><span class="p">.</span><span class="nf">with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">product</span><span class="p">,</span> <span class="n">index</span><span class="o">|</span>
+    <span class="s2">"(</span><span class="si">#{</span><span class="n">product</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">, </span><span class="si">#{</span><span class="n">index</span><span class="si">}</span><span class="s2">)"</span>
+  <span class="k">end</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">', '</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">Product</span>
+  <span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="s2">"INNER JOIN (VALUES </span><span class="si">#{</span><span class="n">ranked_products</span><span class="si">}</span><span class="s2">) AS ids(id, rank) ON products.id = ids.id"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="s2">"ids.rank DESC"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>Notice that in the above code the format of <code class="highlighter-rouge">"(#{product.id}, #{index})"</code> is related to the requirements that PostgreSQL has.</p>
+
+<p>I’ve provided a trivial example here when the rank method uses the index number. However, there are different variants are possible.</p>
+
+<p>I hope you found this helpful!</p>
+
+  </article>
+  <a href="/">
+    <i class="fa fa-arrow-left back-icon"></i>
+    Back
+  </a>
+</div>
+
+      </div>
+    </div>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-71598528-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

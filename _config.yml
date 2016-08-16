@@ -21,7 +21,8 @@ kramdown:
 
 gems:
   - jemoji
-  - jekyll-multiple-languages-plugin
+  - jekyll-language-plugin
 
 languages: ["en", "ru"]
-exclude_from_localizations: ["assets", "css"]
+language_data: data.lang.%%
+language_includes_dir: _i18n
