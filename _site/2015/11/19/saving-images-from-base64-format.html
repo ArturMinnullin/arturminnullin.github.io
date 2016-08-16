@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+      <meta name="description" content="Saving images from the Ruby on Rails API in base64 format">
+    
+    <title>
+      
+    </title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="/css/application.css"/>
+    <link rel="stylesheet" href="/css/mobile.css" media="screen and (max-width: 600px)" />
+  </head>
+  <body>
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+  <header class="post-header">
+    <span>November 19, 2015</span>
+    <h2>Saving images from base64 format</h2>
+  </header>
+
+  <article class="post-content">
+    <p>This post explores methods of saving an image through the API. I have experimented with three different image processing gems in order to cover as many cases as possible.</p>
+
+<p>First of all, let’s see the entirety of the situaltion. There are two different applications:</p>
+
+<ul>
+  <li>A frontend application. It has the “Choose file” field on the particular form</li>
+  <li>A backend API application that receives a request after submitting the form</li>
+</ul>
+
+<p>The question is how to save the uploaded image? I decided to use the following method. I convert the image to base64 scheme, send it, then decode it on API-side and save as regular image.</p>
+
+<p>Here’s how my es6 (frontend) code looks like. Nothing fancy here, I just trigger <code class="highlighter-rouge">change</code> event on the file field and apply <code class="highlighter-rouge">FileReader</code> interface to read the contents of it. I use a hidden field to save decoded image but there is not a problem to bring some javascript framework into the play.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">$</span><span class="p">(</span><span class="s2">"#attachment_image"</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">"change"</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileReader</span><span class="p">();</span>
+
+  <span class="nx">reader</span><span class="p">.</span><span class="nx">onloadend</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">"#attachment_image_coded"</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">reader</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// save encoded image</span>
+  <span class="p">}</span>
+
+  <span class="nx">reader</span><span class="p">.</span><span class="nx">readAsDataURL</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>At the moment the backend accepts a signature image in base64 format and I have to supply incoming requests. Let me show you how to use three different adaptors to decode the <code class="highlighter-rouge">image</code> and save it to my model that’s called <code class="highlighter-rouge">product</code>.</p>
+
+<h2 id="paperclip">Paperclip</h2>
+
+<p>Paperclip (&gt;= 4.0) automatically detects and supports base64 data with <code class="highlighter-rouge">io_adapters</code> method. It acts on any field matching the base64 regex.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="no">Product</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">product</span><span class="o">|</span>
+  <span class="n">product</span><span class="p">.</span><span class="nf">logo</span> <span class="o">=</span> <span class="no">Paperclip</span><span class="p">.</span><span class="nf">io_adapters</span><span class="p">.</span><span class="nf">for</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:image_coded</span><span class="p">])</span>
+
+  <span class="n">product</span><span class="p">.</span><span class="nf">save</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h2 id="carrierwave">Carrierwave</h2>
+
+<p>Simply use <a href="https://github.com/lebedev-yury/carrierwave-base64">carrierwave-base64</a> gem. You need only two lines to roll it out. In Gemfile:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"carrierwave-base64"</span>
+</code></pre>
+</div>
+
+<p>And mount the uploader to model:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">mount_base64_uploader</span> <span class="ss">:image</span><span class="p">,</span> <span class="no">ImageUploader</span>
+</code></pre>
+</div>
+<p>Then implement behavior following the standard flow.</p>
+
+<h2 id="refile">Refile</h2>
+
+<p>With Refile things are getting a little bit complicating. The issue is, <code class="highlighter-rouge">refile</code> doesn’t have base64 encoding out-of-the-box. So I need to decode image manually and create the temporary file. The string with the encoded data should not be prefixed with Data URI scheme format, therefore I use <code class="highlighter-rouge">partition</code> to get the substring. The script I ran along:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">decoded_image</span> <span class="o">=</span> <span class="no">Base64</span><span class="p">.</span><span class="nf">decode64</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:image_coded</span><span class="p">].</span><span class="nf">partition</span><span class="p">(</span><span class="s2">";base64,"</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+
+<span class="no">Tempfile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"temp_file"</span><span class="p">).</span><span class="nf">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+  <span class="n">file</span><span class="p">.</span><span class="nf">binmode</span>
+  <span class="n">file</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">decoded_image</span><span class="p">)</span>
+  <span class="n">file</span><span class="p">.</span><span class="nf">close</span>
+  <span class="n">product</span><span class="p">.</span><span class="nf">image</span> <span class="o">=</span> <span class="n">file</span>
+  <span class="n">product</span><span class="p">.</span><span class="nf">save</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+<p>As you can see, <code class="highlighter-rouge">carrierwave</code> and <code class="highlighter-rouge">paperclip</code> are more convenient and user-friendly, but if you’re looking for a deeper understanding of the whole image upload process, you should definitely check <code class="highlighter-rouge">refile</code> out.</p>
+
+<p>And we’re done. Thank you for reading!</p>
+
+  </article>
+  <a href="/">
+    <i class="fa fa-arrow-left back-icon"></i>
+    Back
+  </a>
+</div>
+
+      </div>
+    </div>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-71598528-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
