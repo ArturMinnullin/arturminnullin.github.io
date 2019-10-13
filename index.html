@@ -30,7 +30,7 @@ title: Artur Minnullin | That's my name
 </div>
 <h3 class="blog-title">Monotonous blog</h3>
 <ul class="post-list">
-  {% for post in site.posts_by_language[page.language] %}
+  {% for post in site.posts %}
     <li>
       <i class="fa fa-dot-circle-o post-icon"></i>
       <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">

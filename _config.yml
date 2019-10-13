@@ -1,6 +1,6 @@
 email: minnullin.artur@gmail.com
 description: >
-  Artur Minnullin's personal website. Ruby on Rails, Javascript development.
+  Artur Minnullin's personal website. Ruby on Rails, Golang, Javascript development.
 
 social:
   - icon: github
@@ -19,9 +19,6 @@ kramdown:
   input: GFM
   coderay_line_numbers: nil
 
-gems:
+plugins:
   - jemoji
   - jekyll-paginate
-  - jekyll-multiple-languages
-
-languages: ["en", "ru"]
