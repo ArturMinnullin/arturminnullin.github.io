@@ -1,9 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic);
+@import url(https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Ubuntu:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure { margin: 0; padding: 0; }
 
-body { font: normal normal 18px/1.5 Lato, PT Sans, Arial, sans-serif; }
+body { font: normal normal 18px/1.5 Quicksand, PT Sans, Arial, sans-serif; }
 
 body::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background-color: rgba(0, 0, 0, 0.5); }
 
@@ -11,7 +10,7 @@ a { text-decoration: none; border-bottom: 1px solid rgba(0, 0, 0, 0.8); color: r
 
 a:hover { color: rgba(0, 0, 0, 0.5); }
 
-h1 { font-size: 2em; font-weight: normal; letter-spacing: .1em; }
+h1 { font-size: 2em; font-weight: normal; letter-spacing: .08em; }
 
 p { margin-top: 1.1em; }
 
@@ -29,19 +28,21 @@ code { font-size: 12px; }
 
 .main-text { border-bottom: 1px dashed #DDD; padding-bottom: 1.5em; line-height: 1.6em; }
 
-.main-language { text-align: right; font-style: italic; font-size: .9rem; margin-top: 10px; }
+.main-footer { text-align: right; font-style: italic; font-size: .9rem; margin-top: 10px; }
 
 .blog-title { margin-bottom: 0.9em; }
 
+.blog-comment { color: rgba(0, 0, 0, 0.5); font-weight: normal; font-size: 0.6em; }
+
 .post-list { list-style: none; }
 
-.post-list li { margin-bottom: 1.5em; }
+.post-list li { margin-bottom: 1em; }
 
 .post-list li sup { margin-left: 0; transition: margin-left 0.4s; }
 
 .post-list li:hover sup { margin-left: 5px; transition: margin-left 0.4s; }
 
-.post-icon { color: rgba(0, 0, 0, 0.8); padding-right: .3em; font-size: .6em; vertical-align: middle; }
+.post-icon { color: rgba(0, 0, 0, 0.8); padding-right: .3em; font-size: .8em; vertical-align: middle; }
 
 .post-date { font-size: x-small; background-color: rgba(54, 136, 68, 0.5); color: white; padding: 0 0.5em; border-radius: 1em; }
 
