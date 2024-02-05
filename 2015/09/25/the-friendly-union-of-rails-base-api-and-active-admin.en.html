@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+      <meta name="description" content="Artur Minnullin's personal website. Ruby on Rails, Golang, Javascript development.
+">
+    
+    <title>
+      The friendly union of rails-base-api and active-admin
+    </title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="/css/application.css"/>
+    <link rel="stylesheet" href="/css/mobile.css" media="screen and (max-width: 600px)" />
+  </head>
+  <body>
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+  <header class="post-header">
+    <span>September 25, 2015</span>
+    <h2>The friendly union of rails-base-api and active-admin</h2>
+  </header>
+
+  <article class="post-content">
+    <p>What do you do when a simple API is needed as soon as possible? Maybe your new awesome iOS-application is ready for alpha-test, but due to the lack of API it has only harcoded data? Perhaps you have just written an amazing front-end framework and need the endpoints to investigate it properly? How do we make the back-end strong and stable in such cases?</p>
+
+<p>For API we usually use <a href="https://github.com/fs/rails-base-api">rails-base-api</a>. Without preparation it includes some of useful gems such as <code class="highlighter-rouge">rails-api</code>, <code class="highlighter-rouge">active_model_serializers</code> and many convinient tools for testing. Also it truncates unused functionality for rails since you don’t need the entire middleware stack. For instance, the template generation. Thus, the whole application is a bit more lightweight and faster. So you don’t have to figure out which configuration you should use to create your API. Everything you need to do is type <code class="highlighter-rouge">bin/setup</code> and start bringing to bear your api-endpoints. Sounds fantastic, doesn’t it?</p>
+
+<p>However, often API endpoints are not enough for live projects.</p>
+
+<p>Obviously, a live application has to provide an interface to work with information from the database. To save time I’ll be looking at one of the popular options available - <a href="https://github.com/activeadmin/activeadmin">ActiveAdmin</a>. ActiveAdmin is a gem that gives you a very good-looking backend panel for your application.</p>
+
+<p>Unfortunately, we are not gonna be able to simply add the <code class="highlighter-rouge">gem "activeadmin"</code> to our Gemfile, because rails-base-api doesn’t have some crucial parts for serve HTML resources. The set of certain actions needs to be accomplished to connect gem <code class="highlighter-rouge">activeadmin</code>. Let me share with you some of them that work. The method described below suits for versions of <code class="highlighter-rouge">ruby "2.2.2"</code> and <code class="highlighter-rouge">rails "4.2.3"</code>. I hope you find it useful.</p>
+
+<p>Firstly, update your Gemfile by adding two gems:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"activeadmin"</span><span class="p">,</span> <span class="ss">github: </span><span class="s2">"activeadmin"</span>
+<span class="n">gem</span> <span class="s2">"sass-rails"</span>
+</code></pre></div></div>
+
+<p>Then install gems and initialize active_admin:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">active_admin</span><span class="ss">:install</span>
+</code></pre></div></div>
+
+<p>Now let’s rename <code class="highlighter-rouge">application_controller.rb</code> to <code class="highlighter-rouge">base_api_controller.rb</code>. Now it’s basis for api-controllers. <code class="highlighter-rouge">ApplicationController</code> shoud be used for ActiveAdmin main controller and, consequently, must be inherited from <code class="highlighter-rouge">ActionController::Base</code> instead of <code class="highlighter-rouge">ActionController::API</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>To create first admin_user:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rake</span> <span class="n">db</span><span class="ss">:migrate</span>
+<span class="n">rake</span> <span class="n">db</span><span class="ss">:seed</span>
+</code></pre></div></div>
+
+<p>We need to use a number of other middlewares that are not built in <code class="highlighter-rouge">rails-api</code> by default. For that purposes add these lines to <code class="highlighter-rouge">application.rb</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># to support the flash mechanism in ActionController.</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Flash</span>
+<span class="c1"># add encrypted cookies. It requires for the authentication with devise.</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Cookies</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Session</span><span class="o">::</span><span class="no">CookieStore</span>
+</code></pre></div></div>
+
+<p>Voila! It’s ready to roll. From this point be free to use activeadmin <a href="https://github.com/activeadmin/activeadmin/tree/master/docs#activeadmin-documentation">documentation</a> for the interface customization.</p>
+
+<p>Now we are happy owners of a a solid administrative interface, ready to begin entering information. No need to hook up with full rails stack. As a bonus we get a few hours saved by not pouring additional effort into creating a similar UI. Enjoy!</p>
+
+  </article>
+  <a href="/">
+    <i class="fa fa-arrow-left back-icon"></i>
+    Back
+  </a>
+</div>
+
+      </div>
+    </div>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-71598528-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
