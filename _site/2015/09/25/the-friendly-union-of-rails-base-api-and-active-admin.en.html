@@ -5,7 +5,7 @@
     <meta name=viewport content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-      <meta name="description" content="Artur Minnullin's personal website. Ruby on Rails, Javascript development.
+      <meta name="description" content="Artur Minnullin's personal website. Ruby on Rails, Golang, Javascript development.
 ">
     
     <title>
@@ -37,40 +37,35 @@
 
 <p>Firstly, update your Gemfile by adding two gems:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"activeadmin"</span><span class="p">,</span> <span class="ss">github: </span><span class="s2">"activeadmin"</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"activeadmin"</span><span class="p">,</span> <span class="ss">github: </span><span class="s2">"activeadmin"</span>
 <span class="n">gem</span> <span class="s2">"sass-rails"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Then install gems and initialize active_admin:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">active_admin</span><span class="ss">:install</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">active_admin</span><span class="ss">:install</span>
+</code></pre></div></div>
 
 <p>Now let’s rename <code class="highlighter-rouge">application_controller.rb</code> to <code class="highlighter-rouge">base_api_controller.rb</code>. Now it’s basis for api-controllers. <code class="highlighter-rouge">ApplicationController</code> shoud be used for ActiveAdmin main controller and, consequently, must be inherited from <code class="highlighter-rouge">ActionController::Base</code> instead of <code class="highlighter-rouge">ActionController::API</code>:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>To create first admin_user:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">rake</span> <span class="n">db</span><span class="ss">:migrate</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rake</span> <span class="n">db</span><span class="ss">:migrate</span>
 <span class="n">rake</span> <span class="n">db</span><span class="ss">:seed</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We need to use a number of other middlewares that are not built in <code class="highlighter-rouge">rails-api</code> by default. For that purposes add these lines to <code class="highlighter-rouge">application.rb</code>:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># to support the flash mechanism in ActionController.</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># to support the flash mechanism in ActionController.</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Flash</span>
 <span class="c1"># add encrypted cookies. It requires for the authentication with devise.</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Cookies</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Session</span><span class="o">::</span><span class="no">CookieStore</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Voila! It’s ready to roll. From this point be free to use activeadmin <a href="https://github.com/activeadmin/activeadmin/tree/master/docs#activeadmin-documentation">documentation</a> for the interface customization.</p>
 

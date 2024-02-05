@@ -32,24 +32,22 @@
 
 <p>Let’s start with selecting <code class="highlighter-rouge">Tools -&gt; New Plugin</code> menu entry. Save the generated skeleton with name <code class="highlighter-rouge">test_runner.py</code> and then fill it with the following code:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sublime</span><span class="o">,</span> <span class="nn">sublime_plugin</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sublime</span><span class="p">,</span> <span class="n">sublime_plugin</span>
 
 <span class="k">class</span> <span class="nc">TestRunnerCommand</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="o">.</span><span class="n">TextCommand</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
-    <span class="n">full_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">file_name</span><span class="p">()</span> <span class="c"># recieve the absolute path for file</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">full_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"spec/"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="c"># transform it to the relative path for the easy reading</span>
-    <span class="n">copied_string</span> <span class="o">=</span> <span class="s">"bundle exec rspec spec/"</span> <span class="o">+</span> <span class="n">path</span>
-    <span class="n">sublime</span><span class="o">.</span><span class="n">set_clipboard</span><span class="p">(</span><span class="n">copied_string</span><span class="p">)</span> <span class="c"># save it to clipboard</span>
-</code></pre>
-</div>
+    <span class="n">full_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">file_name</span><span class="p">()</span> <span class="c1"># recieve the absolute path for file
+</span>    <span class="n">path</span> <span class="o">=</span> <span class="n">full_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"spec/"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># transform it to the relative path for the easy reading
+</span>    <span class="n">copied_string</span> <span class="o">=</span> <span class="s">"bundle exec rspec spec/"</span> <span class="o">+</span> <span class="n">path</span>
+    <span class="n">sublime</span><span class="o">.</span><span class="n">set_clipboard</span><span class="p">(</span><span class="n">copied_string</span><span class="p">)</span> <span class="c1"># save it to clipboard
+</span></code></pre></div></div>
 
 <p>And inside <code class="highlighter-rouge">Preferences -&gt; Key Bindings - User</code> add:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="o">[</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>
   <span class="o">{</span> <span class="s2">"keys"</span>: <span class="o">[</span><span class="s2">"command+shift+x"</span><span class="o">]</span>, <span class="s2">"command"</span>: <span class="s2">"test_runner"</span> <span class="o">}</span>
 <span class="o">]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>And with this, my workflow is transformed into: <code class="highlighter-rouge">cmd+shift+x</code> + jump to console + <code class="highlighter-rouge">cmd+v</code>. Thus, I got rid of the autocomplete work and freed up some time to make another cup of coffee. Thank you for reading!</p>
 

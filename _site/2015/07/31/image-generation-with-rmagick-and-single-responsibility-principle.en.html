@@ -38,16 +38,15 @@
 
 <p>So, let me get straight to the point. First of all, I have added <code class="highlighter-rouge">gem "rmagick"</code> to my Gemfile. Then, told Rails to install the new gem:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">bundle</span> <span class="n">install</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bundle</span> <span class="n">install</span>
+</code></pre></div></div>
 
 <p>Let’s analyze what we’re going to do before jumping into the code. Basically, we have two options for drawing something on the image: place some text on canvas and impose images surfaces. At first sight, the best solution is to construct a service that contains two actions for each mode of drawing. My new class is being instantiated in the following way:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">WatermarkedBackground</span>
-  <span class="nc">BACKGROUND_PATH</span> <span class="o">=</span> <span class="s2">"/path/to/background.jpg"</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">WatermarkedBackground</span>
+  <span class="no">BACKGROUND_PATH</span> <span class="o">=</span> <span class="s2">"/path/to/background.jpg"</span>
 
-  <span class="kp">attr_reader</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:annotation</span><span class="p">,</span> <span class="ss">:logo</span>
+  <span class="nb">attr_reader</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:annotation</span><span class="p">,</span> <span class="ss">:logo</span>
   <span class="kp">private</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:annotation</span><span class="p">,</span> <span class="ss">:logo</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">logo_path</span><span class="p">)</span>
@@ -87,8 +86,7 @@
     <span class="vi">@background</span> <span class="o">||=</span> <span class="no">Magick</span><span class="o">::</span><span class="no">Image</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="no">BACKGROUND_PATH</span><span class="p">).</span><span class="nf">first</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Let’s take a look at what we’ve done here.</p>
 
@@ -112,8 +110,8 @@ Also, I specify the font, the text color, size, and other properties of the text
 
 <p>So it makes sense to separate the configurations for the annotation text in the independent class that is wrapped the RMagick standard action <code class="highlighter-rouge">annotate</code>, as shown bellow:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TextImage</span>
-  <span class="kp">attr_reader</span> <span class="ss">:text</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TextImage</span>
+  <span class="nb">attr_reader</span> <span class="ss">:text</span>
   <span class="kp">private</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
@@ -136,15 +134,14 @@ Also, I specify the font, the text color, size, and other properties of the text
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>And class can be rewritten in the following way.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">WatermarkedBackground</span>
-  <span class="nc">BACKGROUND_PATH</span> <span class="o">=</span> <span class="s2">"/path/to/background.jpg"</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">WatermarkedBackground</span>
+  <span class="no">BACKGROUND_PATH</span> <span class="o">=</span> <span class="s2">"/path/to/background.jpg"</span>
 
-  <span class="kp">attr_reader</span> <span class="ss">:logo</span><span class="p">,</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:background</span>
+  <span class="nb">attr_reader</span> <span class="ss">:logo</span><span class="p">,</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:background</span>
   <span class="kp">private</span> <span class="ss">:logo</span><span class="p">,</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:background</span>
 
   <span class="n">delegate</span> <span class="ss">:write</span><span class="p">,</span> <span class="ss">to: :image</span>
@@ -165,17 +162,15 @@ Also, I specify the font, the text color, size, and other properties of the text
      <span class="n">background</span><span class="p">.</span><span class="nf">composite</span><span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="no">Magick</span><span class="o">::</span><span class="no">OverCompositeOp</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>As you see I decoupled my code and reduce dependencies. This polishing allows me to remove the responsibility for some of RMagick methods. No need to stub them for the testing <code class="highlighter-rouge">WatermarkedBackground</code> anymore. It is substituted by only one responsibility <code class="highlighter-rouge">TextImage</code> which can be easily reused without duplication.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="no">WatermarkedBackground</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">WatermarkedBackground</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
   <span class="ss">text: </span><span class="no">TextImage</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"The quick brown fox jumps over a lazy dog"</span><span class="p">),</span>
   <span class="ss">logo_path: </span><span class="s2">"/path/to/logo.png"</span>
 <span class="p">).</span><span class="nf">write</span><span class="p">(</span><span class="s2">"/path/to/generated_image.jpg"</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Check out the result of my work below.
 <img src="/assets/generated_image.png" alt="Result" class="post-picture" />
