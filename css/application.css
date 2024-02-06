@@ -14,9 +14,9 @@ body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure { m
 
 body { font: normal normal 18px/1.5 Quicksand, PT Sans, Arial, sans-serif; color: var(--black);  }
 
-body::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background-color: var(--black-opacity); }
+body::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background-color: var(--redwood); }
 
-a { text-decoration: none; border-bottom: 1px solid rgba(0, 0, 0, 0.8); color: rgba(0, 0, 0, 0.8); transition: color 0.3s; }
+a { text-decoration: none; border-bottom: 1px solid var(--black); color: var(--black); transition: color 0.3s; }
 
 a:hover { color: var(--black-opacity); }
 
@@ -45,7 +45,7 @@ code { font-size: 12px; }
 
 .blog-title { margin-bottom: 0.9em; }
 
-.blog-comment { color: var(---grey); font-weight: normal; font-size: 0.6em; }
+.blog-comment { color: var(--black-opacity); font-weight: normal; font-size: 0.6em; }
 
 .post-list { list-style: none; }
 
@@ -91,7 +91,7 @@ pre { display: block; overflow-x: auto; }
 
 .socials-links { text-align: right; }
 @media (max-width: 600px) { .socials-links { text-align: center; } }
-.social-link { margin: 0 .3em; border: none; font-size: 0.9rem; }
+.social-link { margin: 0 .3em; border: none; font-size: 0.9rem;  color: var(--redwood); }
 .social-link__github:hover, .social-link__at:hover { color: var(--black); }
 .social-link__linkedin:hover { color: #1B85BC; }
 
