@@ -90,6 +90,7 @@ pre { display: block; overflow-x: auto; }
 @media (max-width: 600px) { .chicken { top: -14px; } }
 
 .socials-links { text-align: right; }
+@media (max-width: 600px) { .socials-links { text-align: center; } }
 .social-link { margin: 0 .3em; border: none; font-size: 0.9rem; }
 .social-link__github:hover, .social-link__at:hover { color: var(--black); }
 .social-link__linkedin:hover { color: #1B85BC; }
