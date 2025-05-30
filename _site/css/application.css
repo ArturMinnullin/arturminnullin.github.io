@@ -81,7 +81,7 @@ pre { display: block; overflow-x: auto; }
 
 .main-info { margin-bottom: 2.5em; }
 
-.avatar { width: 110px; border-radius: 50%; }
+.avatar { width: 130px; border-radius: 50%; }
 @media (max-width: 600px) { .avatar { display: none; } }
 
 .socials { float: right; position: relative; }
